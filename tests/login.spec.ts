@@ -2,50 +2,63 @@ import { test, expect } from '@playwright/test';
 import { chromium, firefox } from '@playwright/test';
 import { APP } from '../const/app';
 
+
 test.use({ viewport: { width: 1538, height: 864 } });
 
 test('Email required and password not required', async ({ page }) => {
+    const chromiumBrowser = await chromium.launch();
     await page.goto(APP.URL + '/user/login');
     await page.fill('input[name="user_mail_address"]', "");
     await page.fill('input[name="user_password"]', '123456789');
     await page.click('button[id="submit-button"]');
-
+    // await page.waitForURL(APP.URL + '/user/login');
     const alertMessages = page.locator('.text-danger');
-    expect(alertMessages).toContainText(['「メールアドレス」を入力してください。']);
+    await expect(alertMessages).toContainText(['「メールアドレス」を入力してください。']);
     await page.screenshot({ path: './tests/screenshots/login/screenshot_required_email.png', fullPage: true });
+    await chromiumBrowser.close();
+    await page.close();
 });
 
 test('Password required and email not required', async ({ page }) => {
+    const chromiumBrowser = await chromium.launch();
     await page.goto(APP.URL + '/user/login');
     await page.fill('input[name="user_mail_address"]', 'ahihi12334@gmail.com');
     await page.fill('input[name="user_password"]', '');
     await page.click('button[id="submit-button"]');
 
     const alertMessages = page.locator('.text-danger');
-    expect(alertMessages).toContainText(['「パスワード」を入力してください。']);
+    await expect(alertMessages).toContainText(['「パスワード」を入力してください。']);
     await page.screenshot({ path: './tests/screenshots/login/screenshot_required_password.png', fullPage: true });
+    await chromiumBrowser.close();
+    await page.close();
 });
 
 test('Password required and email required', async ({ page }) => {
+    const chromiumBrowser = await chromium.launch();
     await page.goto(APP.URL + '/user/login');
     await page.fill('input[name="user_mail_address"]', '');
     await page.fill('input[name="user_password"]', '');
     await page.click('button[id="submit-button"]');
 
     const alertMessages = page.locator('.text-danger');
-    expect(alertMessages).toContainText(['「メールアドレス」を入力してください。', '「パスワード」を入力してください。']);
+    await expect(alertMessages).toContainText(['「メールアドレス」を入力してください。', '「パスワード」を入力してください。']);
     await page.screenshot({ path: './tests/screenshots/login/screenshot_password_and_email_required.png', fullPage: true });
+    await chromiumBrowser.close();
+    await page.close();
 });
 
 test('Email not required and password all space', async ({ page }) => {
+    const chromiumBrowser = await chromium.launch();
     await page.goto(APP.URL + '/user/login');
     await page.fill('input[name="user_mail_address"]', 'abcccccsfaaaaaaaaagttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@gmail.com');
     await page.fill('input[name="user_password"]', '                    ');
     await page.click('button[id="submit-button"]');
     
     const alertMessages = page.locator('.text-danger');
-    expect(alertMessages).toContainText(['「パスワード」を入力してください。']);
+    await expect(alertMessages).toContainText(['「パスワード」を入力してください。']);
     await page.screenshot({ path: './tests/screenshots/login/screenshot_password_all_space.png', fullPage: true });
+    await chromiumBrowser.close();
+    await page.close();
 });
 
 test('Password required and invalid email', async ({ page }) => {
@@ -107,7 +120,7 @@ test('Macth email and password and logout success', async ({ page }) => {
     await page.hover('a[id="user_header_menu"]');
     await page.hover('div[aria-labelledby="user_header_menu"]');
     await page.locator('.dropdown-item').last().click();
-    await page.waitForURL(APP.URL + "/user/login/");
+    await page.waitForTimeout(10000);
     expect(page.url()).toBe(APP.URL + '/user/login/');
 
     await chromiumBrowser.close();
@@ -128,7 +141,8 @@ test('Macth email and password(with space) and logout success and repnsive scree
     await page.hover('a[id="user_header_menu"]');
     await page.hover('div[aria-labelledby="user_header_menu"]');
     await page.locator('.dropdown-item').last().click();
-    await page.waitForURL(APP.URL + "/user/login/");
+    await page.waitForTimeout(10000);
+    // await page.waitForURL(APP.URL + "/user/login/", { waitUntil:"domcontentloaded" });
     expect(page.url()).toBe(APP.URL + '/user/login/');
 
     await chromiumBrowser.close();

@@ -16,7 +16,7 @@ test('Macth email and password and logout success', async ({ page }) => {
 
     await page.locator('em[aria-controls="company-view-header-menu"]').first().click();
     await page.locator('.custom-button-logout').click();
-    await page.waitForURL(APP.URL + "/user/login/", { waitUntil:"domcontentloaded" });
+    await page.waitForTimeout(10000);
     expect(page.url()).toBe(APP.URL + '/user/login/');
 
     await chromiumBrowser.close();
@@ -36,7 +36,7 @@ test('Macth email and password(with space) and logout success and repnsive scree
 
     await page.locator('em[aria-controls="company-view-header-menu"]').first().click();
     await page.locator('.custom-button-logout').click();
-    await page.waitForURL(APP.URL + "/user/login/");
+    await page.waitForTimeout(10000);
     expect(page.url()).toBe(APP.URL + '/user/login/');
 
     await chromiumBrowser.close();
