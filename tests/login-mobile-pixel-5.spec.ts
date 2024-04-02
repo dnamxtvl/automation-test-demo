@@ -3,6 +3,7 @@ import { chromium, firefox } from '@playwright/test';
 import { APP } from '../const/app';
 
 test.use({ browserName: 'chromium', viewport: { width: 393, height: 851 } });
+test.describe.configure({ mode: 'serial' });
 
 test('Macth email and password and logout success', async ({ page }) => {
     const chromiumBrowser = await chromium.launch();
@@ -16,7 +17,7 @@ test('Macth email and password and logout success', async ({ page }) => {
 
     await page.locator('em[aria-controls="company-view-header-menu"]').first().click();
     await page.locator('.custom-button-logout').click();
-    await page.waitForTimeout(10000);
+    await page.waitForURL(APP.URL + '/user/login/', { waitUntil:"domcontentloaded" });
     expect(page.url()).toBe(APP.URL + '/user/login/');
 
     await chromiumBrowser.close();
@@ -36,7 +37,7 @@ test('Macth email and password(with space) and logout success and repnsive scree
 
     await page.locator('em[aria-controls="company-view-header-menu"]').first().click();
     await page.locator('.custom-button-logout').click();
-    await page.waitForTimeout(10000);
+    await page.waitForURL(APP.URL + '/user/login/', { waitUntil:"domcontentloaded" });
     expect(page.url()).toBe(APP.URL + '/user/login/');
 
     await chromiumBrowser.close();
