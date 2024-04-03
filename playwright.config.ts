@@ -16,7 +16,9 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: 1,
-  reporter: [['list'], ['html'], ['json', {  outputFile: 'test-results.json' }]],
+  reporter: [['list'], ['html'], ['json', {  outputFile: 'test-results.json' }],
+    ['github']
+  ],
   use: {
     trace: 'on-first-retry',
     httpCredentials: {
