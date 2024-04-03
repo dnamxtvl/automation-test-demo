@@ -12,7 +12,7 @@ test('Macth email and password and logout success', async ({ page }) => {
     await page.fill('input[name="user_password"]', '12345678');
     await page.click('button[id="submit-button"]');
     await page.waitForURL(APP.URL, { waitUntil:"domcontentloaded" });
-    await page.screenshot({ path: './tests/screenshots/login/screenshot_mobile_login_success.png', fullPage: true });
+    await page.screenshot({ path: './test-results/screenshots/login/screenshot_mobile_login_success.png', fullPage: true });
 
     await page.locator('em[aria-controls="company-view-header-menu"]').first().click();
     await page.locator('.custom-button-logout').click();
@@ -32,7 +32,7 @@ test('Macth email and password(with space) and logout success and repnsive scree
     await page.fill('input[name="user_password"]', '12345678   ');
     await page.click('button[id="submit-button"]');
     await page.waitForURL(APP.URL, { waitUntil:"domcontentloaded" });
-    await page.screenshot({ path: './tests/screenshots/login/screenshot_mobile_login_success_2.png', fullPage: true });
+    await page.screenshot({ path: './test-results/screenshots/login/screenshot_mobile_login_success_2.png', fullPage: true });
 
     await page.locator('em[aria-controls="company-view-header-menu"]').first().click();
     await page.locator('.custom-button-logout').click();
