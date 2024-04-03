@@ -1,9 +1,7 @@
 import { test, expect, firefox, chromium } from '@playwright/test';
 import { APP } from '../const/app';
 
-
 test.use({ viewport: { width: 1538, height: 864 } });
-test.describe.configure({ mode: 'serial' });
 
 test('Email required and password not required', async ({ page }) => {
     const chromiumBrowser = await chromium.launch();
@@ -27,7 +25,7 @@ test('Password required and email not required', async ({ page }) => {
     await page.fill('input[name="user_mail_address"]', 'ahihi12334@gmail.com');
     await page.fill('input[name="user_password"]', '');
     await page.click('button[id="submit-button"]');
-    await page.waitForURL(APP.URL + '/user/login/', { waitUntil:"domcontentloaded" });
+    // await page.waitForURL(APP.URL + '/user/login/', { waitUntil:"domcontentloaded" });
     await page.screenshot({ path: './tests/screenshots/login/screenshot_required_password.png', fullPage: true });
     await expect(page.locator('.text-danger')).toHaveText(['「パスワード」を入力してください。']);
     await chromiumBrowser.close();

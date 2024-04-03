@@ -3,7 +3,6 @@ import { chromium, firefox } from '@playwright/test';
 import { APP } from '../const/app';
 
 test.use({ browserName: 'chromium', viewport: { width: 390, height: 884 } });
-test.describe.configure({ mode: 'serial' });
 
 test('Email required and password not required iphone 12', async ({ page }) => {
     const chromiumBrowser = await chromium.launch();
