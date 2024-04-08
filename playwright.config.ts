@@ -27,6 +27,7 @@ export default defineConfig({
     serviceWorkers: 'allow',
     ignoreHTTPSErrors: true,
   },
+
   timeout: 90000,
   expect: {
     timeout: 10000,
