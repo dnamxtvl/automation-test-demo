@@ -17,14 +17,15 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: 1,
   reporter: [['html'], ['json', {  outputFile: './test-results/index.json' }],
-    ['github']
   ],
   use: {
     trace: 'on-first-retry',
     httpCredentials: {
       username: APP.USERNAME,
       password: APP.PASSWORD,
-    }
+    },
+    serviceWorkers: 'allow',
+    ignoreHTTPSErrors: true,
   },
   timeout: 90000,
   expect: {
@@ -34,11 +35,11 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'], isMobile: true },
+      use: { ...devices['Desktop Chrome'], isMobile: true},
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { ...devices['Desktop Firefox']},
     },
 
     // {
