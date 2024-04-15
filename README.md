@@ -7,3 +7,4 @@ sagfsgag
 3636
 test nhan tin hieu tu webhook
 test ahihi
+update pipeline script
