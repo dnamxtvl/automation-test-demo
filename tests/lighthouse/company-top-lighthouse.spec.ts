@@ -4,6 +4,8 @@ import { playAudit } from 'playwright-lighthouse';
 import { APP } from '../../const/app';
 import { TEST_NOINDEX_COMPANY } from '../../const/input-test';
 
+test.use({ browserName: 'chromium', viewport: { width: 412, height: 823 } });
+
 test('Company top test light house', async ({page}) => {
     const browser = await chromium.launch({
         args: ['--remote-debugging-port=9222'],
@@ -20,6 +22,13 @@ test('Company top test light house', async ({page}) => {
             pwa: 10,
         },
         port: 9222,
+        reports: {
+            directory: './test-results/lighthouse',
+            formats: {
+                html: true,
+                json: true,
+            }
+        }
     });
 
     await browser.close();
